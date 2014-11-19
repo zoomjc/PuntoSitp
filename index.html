@@ -1,0 +1,182 @@
+<!DOCTYPE html> 
+<html>
+<head>
+	<title>Page Title</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link href='http://fonts.googleapis.com/css?family=Oxygen&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="css/themes/PuntoSitp.css" />
+  <link rel="stylesheet" href="css/themes/jquery.mobile.icons.min.css" />
+  <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile.structure-1.4.5.min.css" />
+	<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="http://code.jquery.com/mobile/1.4.4/jquery.mobile-1.4.4.min.js"></script>
+    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false&language=es"></script>
+    <script>
+    $( document ).on( "pagecreate", "#map-page", function() {
+		console.log("Mapa creado");
+		var defaultLatLng = new google.maps.LatLng(4.6986249,-74.0891105);  // Uniminuto
+		
+		// --- Esto es para Villa Rosita
+		var villaRosita = new google.maps.LatLng(4.699266,-74.090638);
+		var contVillaRosita = '<div id="content">'+
+      '<div id="siteNotice">'+
+      '</div>'+
+      '<h1 id="firstHeading" class="firstHeading">Villa Rosita</h1>'+
+      '<div id="bodyContent">'+
+      '<p>Este es el contenido de Villa Rosita</p>'+
+      '</div>'+
+      '</div>';
+	  // --- Fin de Villa Rosita
+	  
+	  // --- Esto es para Punto Efecty
+		var puntoEfecty = new google.maps.LatLng(4.697045, -74.090723);
+		var contPuntoEfecty = '<div id="content">'+
+      '<div id="siteNotice">'+
+      '</div>'+
+      '<h1 id="firstHeading" class="firstHeading">Punto Efecty</h1>'+
+      '<div id="bodyContent">'+
+      '<p>Este es el contenido de Punto Efecty</p>'+
+      '</div>'+
+      '</div>';
+	  // --- Fin de Punto Efecty
+	  
+	   // --- Esto es para Pagatodo
+		var pagatodo = new google.maps.LatLng(4.697757, -74.092801);
+		var contpagatodo = '<div id="content">'+
+      '<div id="siteNotice">'+
+      '</div>'+
+      '<h1 id="firstHeading" class="firstHeading">pagatodo</h1>'+
+      '<div id="bodyContent">'+
+      '<p>Este es el contenido de pagatodo</p>'+
+      '</div>'+
+      '</div>';
+	  // --- Fin de Pagatodo
+	  
+	    // --- Esto es para Granja
+		var Granja = new google.maps.LatLng(4.699483, -74.093823);
+		var contGranja = '<div id="content">'+
+      '<div id="siteNotice">'+
+      '</div>'+
+      '<h1 id="firstHeading" class="firstHeading">Granja</h1>'+
+      '<div id="bodyContent">'+
+      '<p>Este es el contenido de Granja</p>'+
+      '</div>'+
+      '</div>';
+	  // --- Fin de Granja
+	  
+		if ( navigator.geolocation ) {
+			function success(pos) {
+				// Location found, show map with these coordinates
+				drawMap(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
+			}
+			function fail(error) {
+				drawMap(defaultLatLng);  // Failed to find location, show default map
+			}
+			// Find the users current position.  Cache the location for 5 minutes, timeout after 6 seconds
+			navigator.geolocation.getCurrentPosition(success, fail, {maximumAge: 500000, enableHighAccuracy:true, timeout: 6000});
+		} else {
+			drawMap(defaultLatLng);  // No geolocation support, show default map
+		}
+		function drawMap(latlng) {
+			var myOptions = {
+				zoom: 15,
+				center: latlng,
+				mapTypeId: google.maps.MapTypeId.ROADMAP
+			};
+			var map = new google.maps.Map(document.getElementById("map-canvas"), myOptions);
+			// Add an overlay to the map of current lat/lng
+			var marker = new google.maps.Marker({
+				position: latlng,
+				map: map,
+				title: "hola!"
+			});
+			
+			// --- Esto es para Villa Rosita
+			var mVillaRosita = new google.maps.Marker({
+				position: villaRosita,
+				map: map,
+				title: "Villa Rosita Titulo"
+			});
+			var infoVillaRosita = new google.maps.InfoWindow({
+			  content: contVillaRosita
+		  	});
+			google.maps.event.addListener(mVillaRosita, 'click', function() {
+				infoVillaRosita.open(map,mVillaRosita);
+			});
+			// --- Fin del codigo para Villa Rosita
+			
+			// --- Esto es para Punto Efecty
+			var mPuntoEfecty = new google.maps.Marker({
+				position: puntoEfecty,
+				map: map,
+				title: "Punto Efecty Titulo"
+			});
+			var infoPuntoEfecty = new google.maps.InfoWindow({
+			  content: contPuntoEfecty
+		  	});
+			google.maps.event.addListener(mPuntoEfecty, 'click', function() {
+				infoPuntoEfecty.open(map,mPuntoEfecty);
+			});
+			// --- Fin del codigo para Punto Efecty
+			
+			// --- Esto es para Pagatodo
+			var mpagatodo = new google.maps.Marker({
+				position: pagatodo,
+				map: map,
+				title: "Pagatodo Titulo"
+			});
+			var infopagatodo = new google.maps.InfoWindow({
+			  content: contpagatodo
+		  	});
+			google.maps.event.addListener(mpagatodo, 'click', function() {
+				infopagatodo.open(map,mpagatodo);
+			});
+			// --- Fin del codigo para Pagatodo
+			
+			// --- Esto es para Granja
+			var mGranja = new google.maps.Marker({
+				position: Granja,
+				map: map,
+				title: "Drogueria Calle 77 Titulo"
+			});
+			var infoGranja = new google.maps.InfoWindow({
+			  content: contGranja
+		  	});
+			google.maps.event.addListener(mGranja, 'click', function() {
+				infoGranja.open(map,mGranja);
+			});
+			// --- Fin del codigo para Ganja 
+			
+		}
+	});
+    </script>
+    <style>
+    	#map-page, #map-canvas { width: 100%; height: 100%; padding: 0; }
+		h1 {
+			text-align: left !important;
+			margin: 0 !important;
+			margin-left:15px !important;
+			color:#FFFFFF !important;
+		}
+		.ui-header {
+           background-color:#9F3 !important; 
+		}
+    </style>
+</head>
+
+<body>
+
+
+
+
+<div data-url="map-page" data-role="page" id="map-page">
+    <div data-role="header" data-theme="a">
+    	<h1>PuntoSitp</h1>
+    </div>
+    <div role="main" class="ui-content" id="map-canvas">
+        <!-- map loads here... -->
+    </div>
+</div>
+
+</body>
+</html>
